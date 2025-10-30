@@ -20,6 +20,7 @@ The project is organized into the following key directories and files:
 
 - **Controllers/**: Contains API controllers that define endpoints for accessing data.
   - `DataController.cs`: Provides endpoints for accessing cached data.
+  - `WeatherForecastController.cs`: A sample controller for weather-related data.
 
 - **IService/**: Contains interface definitions for services used in the application.
   - `IBackgroundDataLoader.cs`: Interface for the background data loader service.
@@ -63,8 +64,32 @@ The project is organized into the following key directories and files:
 5. **Caching**:
    - The `CacheService` handles storing and retrieving data from the cache.
    - Cached data is refreshed periodically by the `BackgroundDataLoader` to ensure it remains up-to-date.
+   - Cache functionality includes:
+     - **Cache Set**: When data is fetched from the external API, it is stored in the cache with a specified expiration time. For example:
+       - `Cache set for key 'Products' with 30 items, expiration: 10 minutes.`
+       - `Cache set for key 'Users' with 30 items, expiration: 10 minutes.`
+       - `Cache set for key 'Posts' with 30 items, expiration: 10 minutes.`
+     - **Cache Refresh**: The `BackgroundDataLoader` ensures the cache is refreshed at regular intervals. For example:
+       - `Cache refreshed at: 10/30/2025 11:20:00.`
+     - **Cache Hit**: When data is requested, the application checks the cache first. If the data is found, it is retrieved from the cache, improving performance. For example:
+       - `Cache hit for key 'Products', items retrieved: 30.`
 
-6. **Logging**:
+6. **External API Configuration**:
+   - The application interacts with an external API to fetch data. The API configuration is defined in the `appsettings.json` file under the `ExternalApi` section:
+     - **BaseUrl**: The base URL of the external API (e.g., `https://dummyjson.com`).
+     - **Endpoints**: Specific endpoints for fetching different types of data:
+       - `Products`: `/products`
+       - `Users`: `/users`
+       - `Posts`: `/posts`
+   - These settings allow the application to dynamically construct API requests for fetching data.
+
+7. **Cache Settings**:
+   - The cache behavior is controlled by the `CacheSettings` section in the `appsettings.json` file:
+     - **RefreshIntervalMinutes**: The interval (in minutes) at which the cache is refreshed by the `BackgroundDataLoader`.
+     - **CacheExpirationMinutes**: The duration (in minutes) for which cached data remains valid before it is considered stale.
+   - These settings ensure that the cache remains up-to-date while minimizing redundant API calls.
+
+8. **Logging**:
    - The application uses the built-in .NET logging framework to log important events, errors, and debug information.
    - Logging is configured in `Program.cs` and can be customized to log to the console, files, or external systems.
    - The `ILogger` interface is used throughout the application to log messages, making it easier to monitor the application's behavior and troubleshoot issues.
@@ -108,11 +133,16 @@ The project is organized into the following key directories and files:
     ```json
     {
       "CacheSettings": {
-        "ExpirationTimeInMinutes": 10
+        "RefreshIntervalMinutes": 10,
+        "CacheExpirationMinutes": 10
       },
-      "ExternalApiOptions": {
-        "BaseUrl": "https://api.example.com",
-        "ApiKey": "your-api-key"
+      "ExternalApi": {
+        "BaseUrl": "https://dummyjson.com",
+        "Endpoints": {
+          "Products": "/products",
+          "Users": "/users",
+          "Posts": "/posts"
+        }
       }
     }
     ```
