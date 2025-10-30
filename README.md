@@ -6,7 +6,6 @@ CacheApiService is a .NET-based service designed to provide efficient caching me
 ## Features
 - In-memory caching for fast data retrieval.
 - Configurable expiration policies.
-- Support for distributed caching.
 - Easy integration with existing .NET applications.
 - Background service to periodically fetch and update cached data from an external API.
 - API endpoints for accessing cached data.
@@ -21,7 +20,6 @@ The project is organized into the following key directories and files:
 
 - **Controllers/**: Contains API controllers that define endpoints for accessing data.
   - `DataController.cs`: Provides endpoints for accessing cached data.
-  - `WeatherForecastController.cs`: A sample controller for weather-related data.
 
 - **IService/**: Contains interface definitions for services used in the application.
   - `IBackgroundDataLoader.cs`: Interface for the background data loader service.
