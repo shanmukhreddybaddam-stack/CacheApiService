@@ -18,6 +18,8 @@ builder.Services.Configure<ExternalApiOptions>(
 builder.Configuration.GetSection("ExternalApi"));
 
 builder.Services.AddHttpClient<IExternalApiService, ExternalApiService>();
+builder.Services.AddHttpClient<IBackgroundDataLoader, BackgroundDataLoader>();
+builder.Services.Configure<CacheSettings>(builder.Configuration.GetSection("CacheSettings"));
 
 
 var app = builder.Build();
