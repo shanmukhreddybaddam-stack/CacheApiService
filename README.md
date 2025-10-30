@@ -10,6 +10,7 @@ CacheApiService is a .NET-based service designed to provide efficient caching me
 - Easy integration with existing .NET applications.
 - Background service to periodically fetch and update cached data from an external API.
 - API endpoints for accessing cached data.
+- Comprehensive logging for monitoring and debugging.
 
 ## Project Structure
 The project is organized into the following key directories and files:
@@ -64,6 +65,15 @@ The project is organized into the following key directories and files:
 5. **Caching**:
    - The `CacheService` handles storing and retrieving data from the cache.
    - Cached data is refreshed periodically by the `BackgroundDataLoader` to ensure it remains up-to-date.
+
+6. **Logging**:
+   - The application uses the built-in .NET logging framework to log important events, errors, and debug information.
+   - Logging is configured in `Program.cs` and can be customized to log to the console, files, or external systems.
+   - The `ILogger` interface is used throughout the application to log messages, making it easier to monitor the application's behavior and troubleshoot issues.
+   - Example log messages include:
+     - Successful data fetches from the external API.
+     - Cache updates and expiration events.
+     - Errors encountered during API calls or background tasks.
 
 ## Prerequisites
 - .NET SDK installed on your system.
